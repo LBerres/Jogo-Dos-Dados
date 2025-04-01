@@ -60,7 +60,7 @@
         static string MenuFinal()
         {
             Console.Write("Deseja Continuar? (S/N): ");
-            string opcaoContinuar = Console.ReadLine().ToLower();
+            string opcaoContinuar = Console.ReadLine()!.ToUpper();
 
             return opcaoContinuar;
         }
