@@ -1,29 +1,54 @@
 ﻿namespace JogoDosDados.ConsoleApp
 {
     /*
-     * Versão 1 - Estrutura Básica e Simulação de Dados 
+     * Versão 2 - Controle da Posição do Jogador e Vitória.
         Requisitos:
-        Exibir um banner para o jogo de dados
-        Implementar a geração de números aleatórios para simular um dado (1-6)
-        Exibir o resultado do lançamento do dado
-        Permitir que o usuário pressione Enter para lançar o dado
+
+        Armazenar a posição do jogador na pista e atualizar o valor após o lançamento do dado
+        Exibir a posição atual do jogador na pista
+        Definir a linha de chegada em 30 verificar se o jogador alcançou ou ultrapassou a linha de chegada
+        Permitir o jogador realizar várias jogadas
      */
 
     internal class Program
     {
         static void Main(string[] args)
         {
+            const int limiteLinhaChegada = 30;
 
             while (true)
             {
-                MenuInicial();
+                int posicaoUsuario = 0;
+                bool jogoEstaEmAndamento = true;
 
-                int resultado = LançamentoDoDado();
+                while (jogoEstaEmAndamento)
+                {
+                    MenuInicial();
 
-                ExibirResultadoSorteio(resultado);
+                    int resultado = LançamentoDoDado();
+
+                    ExibirResultadoSorteio(resultado);
+
+                    posicaoUsuario += resultado;
+
+                    Console.WriteLine($"O Jogador Está Na Posição: {posicaoUsuario} de {limiteLinhaChegada}");
+
+                    if (posicaoUsuario >= limiteLinhaChegada)
+                    {
+                        Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+                        Console.WriteLine("                                      Parabéns! Você Chegou Na Linha de Chegada!                                        ");
+                        Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+
+                        jogoEstaEmAndamento = false;
+                    }
+                    else
+                        Console.WriteLine($"O Jogador Está Na Posição: {posicaoUsuario} de {limiteLinhaChegada}");
+
+                    Console.Write("Pressione ENTER Para Continuar.....");
+                    Console.ReadLine();
+                }
 
                 string opcaoContinuar = MenuFinal();
-
                 if (opcaoContinuar != "S")
                     break;
             }
@@ -59,7 +84,8 @@
 
         static string MenuFinal()
         {
-            Console.Write("Deseja Continuar? (S/N): ");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+            Console.Write("                                                Deseja Continuar? (S/N):                                                    ");
             string opcaoContinuar = Console.ReadLine()!.ToUpper();
 
             return opcaoContinuar;
