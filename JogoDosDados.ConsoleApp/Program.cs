@@ -1,13 +1,16 @@
 ﻿namespace JogoDosDados.ConsoleApp
 {
     /*
-     * Versão 2 - Controle da Posição do Jogador e Vitória.
+     * Versão 3 - Incluir o Computador Como Oponente. 
         Requisitos:
 
-        Armazenar a posição do jogador na pista e atualizar o valor após o lançamento do dado
-        Exibir a posição atual do jogador na pista
-        Definir a linha de chegada em 30 verificar se o jogador alcançou ou ultrapassou a linha de chegada
-        Permitir o jogador realizar várias jogadas
+        Informar que o computador está jogando
+        Armazenar a posição do computador na pista e atualizar o valor após o lançamento do dado
+        Atualizar a posição do computador após seu lançamento de dado
+        Exibir a nova posição
+        Verificar se o computador alcançou ou ultrapassou a linha de chegada
+        Informar quem venceu o jogo
+        Implementar turnos alternados entre jogador e computador
      */
 
     internal class Program
@@ -19,11 +22,14 @@
             while (true)
             {
                 int posicaoUsuario = 0;
+                int posicaoComputador = 0;
                 bool jogoEstaEmAndamento = true;
 
                 while (jogoEstaEmAndamento)
                 {
-                    MenuInicial();
+                    // Turno do Usuário
+
+                    MenuInicial("Usuário");
 
                     int resultado = LançamentoDoDado();
 
@@ -31,18 +37,44 @@
 
                     posicaoUsuario += resultado;
 
-                    Console.WriteLine($"O Jogador Está Na Posição: {posicaoUsuario} de {limiteLinhaChegada}");
-
                     if (posicaoUsuario >= limiteLinhaChegada)
                     {
                         Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
                         Console.WriteLine("                                      Parabéns! Você Chegou Na Linha de Chegada!                                        ");
                         Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
 
+                        Console.ReadLine();
                         jogoEstaEmAndamento = false;
+                        continue;
                     }
                     else
                         Console.WriteLine($"O Jogador Está Na Posição: {posicaoUsuario} de {limiteLinhaChegada}");
+
+                    Console.Write("Pressione ENTER Para Continuar.....");
+                    Console.ReadLine();
+
+                    // Turno do Computador
+
+                    MenuInicial("Computador");
+
+                    int resultadoComputador = LançamentoDoDado();
+
+                    ExibirResultadoSorteio(resultadoComputador);
+
+                    posicaoComputador += resultadoComputador;
+
+                    if (posicaoComputador >= limiteLinhaChegada)
+                    {
+                        Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+                        Console.WriteLine("                                  Que Pena! O Computador Chegou Na Linha de Chegada!                                    ");
+                        Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+
+                        Console.ReadLine();
+                        jogoEstaEmAndamento = false;
+                        continue;
+                    }
+                    else
+                        Console.WriteLine($"O Computador Está Na Posição: {posicaoComputador} de {limiteLinhaChegada}");
 
                     Console.Write("Pressione ENTER Para Continuar.....");
                     Console.ReadLine();
@@ -53,15 +85,20 @@
                     break;
             }
         }
-        static void MenuInicial()
+        static void MenuInicial(string nomeJogador)
         {
             Console.Clear();
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine("                                                    Jogo dos Dados                                                      ");
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+            Console.WriteLine($"                                                 Turno do(a): {nomeJogador}                                            ");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
 
-            Console.WriteLine("Pressione ENTER Para Lançar o Dado.....");
-            Console.ReadLine();
+            if (nomeJogador != "Computador")
+            {
+                Console.Write("Pressione ENTER para lançar o dado...");
+                Console.ReadLine();
+            }
         }
 
         static int LançamentoDoDado()
@@ -77,7 +114,7 @@
         static void ExibirResultadoSorteio(int resultado)
         {
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine($"                                      O Valor Sorteado Foi: {resultado}                                                ");
+            Console.WriteLine($"                                                O Valor Sorteado Foi: {resultado}                                      ");
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
 
         }
