@@ -1,121 +1,123 @@
 ﻿namespace JogoDosDados.ConsoleApp
-{
-    public class Computador
-    {
-        public static int posicaoComputador = 0;
+{/*
+  * Estruturação Orientada a Objetos
+ */
 
-        public static bool ExecutarRodadaDoComputador()
+    public class Jogador
+    {
+        int posicaoUsuario = 0;
+        public string nome = "";
+
+        public bool ExecutarRodada()
         {
-            bool turnoExtraDoComputador = true;
-            bool computadorVenceu = false;
+            bool turnoExtraDoUsuario = true;
+            bool usuarioVenceu = false;
 
             do
             {
-                turnoExtraDoComputador = false;
+                turnoExtraDoUsuario = false;
 
-                MenuInicial("Computador", Usuário.posicaoUsuario, posicaoComputador, Program.limiteLinhaChegada);
+                MenuInicial(posicaoUsuario, Program.limiteLinhaChegada);
 
                 int resultado = LançamentoDoDado();
 
                 ExibirResultadoSorteio(resultado);
 
-                posicaoComputador += resultado;
+                posicaoUsuario += resultado;
 
-                if (posicaoComputador >= Program.limiteLinhaChegada)
+                if (posicaoUsuario >= Program.limiteLinhaChegada)
                 {
                     Console.Clear();
-                    MenuInicial("Computador", Usuário.posicaoUsuario, posicaoComputador, Program.limiteLinhaChegada);
+                    MenuInicial(posicaoUsuario, Program.limiteLinhaChegada);
+                    Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
                     Console.WriteLine();
-                    Console.WriteLine("                                ...Que Pena! O Computador Chegou Na Linha de Chegada!...");
+                    Console.WriteLine($"                                    ...Parabéns! {nome} Chegou Na Linha de Chegada!...");
                     Console.ReadLine();
 
-                    computadorVenceu = true;
+                    usuarioVenceu = true;
                     break;
                 }
+
 
                 // Casas Especiais
                 else if (resultado == 6)
                 {
                     Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
                     Console.WriteLine();
-                    Console.WriteLine("                               !Computador Rolou Um Acerto Crítico, Ganha mais uma Rodada!");
+                    Console.WriteLine($"                                  !{nome} Rolou Um Acerto Crítico, Ganha mais uma Rodada!");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-                    Console.ReadLine();
 
-                    turnoExtraDoComputador = true;
+                    turnoExtraDoUsuario = true;
                 }
 
-                else if (posicaoComputador == 5)
+                else if (posicaoUsuario == 5)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("                                   Computador Encontrou Um Atalho! Avançou 3 Casas!");
+                    Console.WriteLine($"                                        {nome} Encontrou Um Atalho! Avance 3 Casas!");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-                    Console.WriteLine();
-                    posicaoComputador += 3;
+                    posicaoUsuario += 3;
                 }
-                else if (posicaoComputador == 10)
+                else if (posicaoUsuario == 10)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("                                   Computador Encontrou Um Atalho! Avançou 3 Casas!");
+                    Console.WriteLine($"                                        {nome} Encontrou Um Atalho! Avance 3 Casas!");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-                    Console.WriteLine();
-                    posicaoComputador += 3;
+                    posicaoUsuario += 3;
                 }
 
-                else if (posicaoComputador == 15)
+                else if (posicaoUsuario == 15)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("                                   Computador Encontrou Um Atalho! Avançou 3 Casas!");
+                    Console.WriteLine($"                                        {nome} Encontrou Um Atalho! Avance 3 Casas!");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-                    Console.WriteLine();
-                    posicaoComputador += 3;
+                    posicaoUsuario += 3;
                 }
 
-                else if (posicaoComputador == 7)
+                else if (posicaoUsuario == 7)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("                                   Computador Encontrou Um Obstáculo! Voltou 2 Casas!");
+                    Console.WriteLine($"                                       {nome} Encontrou Um Obstáculo! Volte 2 Casas!");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-                    posicaoComputador -= 2;
+                    posicaoUsuario -= 2;
                 }
 
-                else if (posicaoComputador == 13)
+                else if (posicaoUsuario == 13)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("                                   Computador Encontrou Um Obstáculo! Voltou 2 Casas!");
+                    Console.WriteLine($"                                       {nome} Encontrou Um Obstáculo! Volte 2 Casas!");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-                    posicaoComputador -= 2;
+                    posicaoUsuario -= 2;
                 }
 
-                else if (posicaoComputador == 20)
+                else if (posicaoUsuario == 20)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("                                   Computador Encontrou Um Obstáculo! Voltou 2 Casas!");
+                    Console.WriteLine($"                                       {nome} Encontrou Um Obstáculo! Volte 2 Casas!");
                     Console.WriteLine();
                     Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-                    posicaoComputador -= 2;
+                    posicaoUsuario -= 2;
                 }
-
 
                 else
                 {
                     Console.WriteLine();
-                    Console.WriteLine($"                                         O Computador Está na Posição: {posicaoComputador} de {Program.limiteLinhaChegada}");
+                    Console.WriteLine($"                                         O {nome} Está na Posição: {posicaoUsuario} de {Program.limiteLinhaChegada}");
                     Console.WriteLine();
+                    Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
                 }
 
-            } while (turnoExtraDoComputador);
+            } while (turnoExtraDoUsuario);
 
-            return computadorVenceu;
+            return usuarioVenceu;
         }
 
-        static void MenuInicial(string nomeJogador, int posicaoUsuario, int posicaoComputador, int limiteLinhaChegada)
+        void MenuInicial(int posicaoUsuario, int limiteLinhaChegada)
         {
             Console.Clear();
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
@@ -126,15 +128,12 @@
             Console.WriteLine("                        |         |                  |         |              | o  o  o |                               ");
             Console.WriteLine("                         ---------                    ---------                ---------                                ");
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
-            Console.WriteLine($"O Usuário(a) Está Na Posição: {posicaoUsuario} de {limiteLinhaChegada}");
-            Console.WriteLine($"O Computador Está Na Posição: {posicaoComputador} de {limiteLinhaChegada}");
-            Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
             Console.WriteLine();
-            Console.WriteLine($"                                                 Turno do: {nomeJogador}                                            ");
+            Console.WriteLine($"                                                 Turno do: {nome}                                            ");
             Console.WriteLine();
             Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
 
-            if (nomeJogador != "Computador")
+            if (nome != "Computador")
             {
                 Console.Write("                                        ...Pressione ENTER Para Lançar o Dado...");
                 Console.WriteLine();
@@ -142,7 +141,7 @@
             }
         }
 
-        static int LançamentoDoDado()
+        int LançamentoDoDado()
         {
             Random geradorDeNumeros = new Random();
 
@@ -152,7 +151,7 @@
 
         }
 
-        static void ExibirResultadoSorteio(int resultado)
+        void ExibirResultadoSorteio(int resultado)
         {
             Console.WriteLine($"                                                O Valor Sorteado Foi: {resultado}                                      ");
 

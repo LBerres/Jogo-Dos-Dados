@@ -11,13 +11,16 @@
             while (true)
             {
                 bool jogoEstaEmAndamento = true;
-                Usuário.posicaoUsuario = 0;
-                Computador.posicaoComputador = 0;
 
+                Jogador usuario = new Jogador();
+                usuario.nome = "Usuário(a)";
+
+                Jogador computador = new Jogador();
+                computador.nome = "Computador";
 
                 while (jogoEstaEmAndamento)
                 {
-                    bool usuárioVenceu = Usuário.ExecutarRodadaDoUsuário();
+                    bool usuárioVenceu = usuario.ExecutarRodada();
 
                     if (usuárioVenceu == true)
                     {
@@ -29,7 +32,7 @@
                     Console.Write("                                          ...Pressione ENTER Para Continuar...");
                     Console.ReadLine();
 
-                    bool computadorVenceu = Computador.ExecutarRodadaDoComputador();
+                    bool computadorVenceu = computador.ExecutarRodada();
 
                     if (computadorVenceu == true)
                     {
@@ -37,7 +40,6 @@
                         break;
                     }
 
-                    Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
                     Console.WriteLine();
                     Console.Write("                                          ...Pressione ENTER Para Continuar...");
                     Console.ReadLine();
